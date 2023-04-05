@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps Clone</title>   
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
+    <link rel="manifest" href="manifest.json">
+    <img src='https://ec47a3db-admin.mobsted.com/api/v8/qr/imagehex?text=https://ec47a3db.mobsted.com/pwa/?appid=15' />
+    <style>
+        body{
+            margin: 0;
+        }
+        #map{
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZ3VydWpvaG55IiwiYSI6ImNsZzF0MTYzaTFlbzMzZm1tcWRsNnJuZnAifQ.nDcAOJUJM5twFnrdbiKVoQ';
+
+                    navigator.geolocation.getCurrentPosition( successLocation, errorLocation, {
+                enableHighAccuracy: true
+            })
+
+            function successLocation(position){
+                setUpMap([position.coords.longitude, position.coords.latitude])
+            }
+
+            function errorLocation(){
+                setUpMap([-2.28, 41.45])
+            }
+
+            function setUpMap(center){
+                var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: center,
+                zoom: 15
+                });
+
+                map.addControl(new mapboxgl.NavigationControl());
+
+                map.addControl(
+                    new MapboxDirections({
+                    accessToken: mapboxgl.accessToken
+                    }),
+                    'top-left'
+                    );
+            }
+        </script>
+        <!-- <link rel="manifest" href="manifest.json"> -->
+        
+</head>
+<body>
+    <div id='map' ></div>
+</body>
+</html>
